@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.submit-form__container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+  margin-top: 10%;
+}
+
+.info__errors {
+  color: red;
+  font-size: small;
+  margin: 0;
+  font-style: italic;
+}

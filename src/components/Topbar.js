@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Button from '@material-ui/core/Button';
+import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import Button from "@material-ui/core/Button";
+import history from "history.js";
+import { connect } from "react-redux";
 
 // import AccountCircle from '@material-ui/icons/AccountCircle';
 // import Switch from '@material-ui/core/Switch';
@@ -14,7 +16,7 @@ import Button from '@material-ui/core/Button';
 // import MenuItem from '@material-ui/core/MenuItem';
 // import Menu from '@material-ui/core/Menu';
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -29,7 +31,7 @@ const useStyles = theme => ({
 class MenuAppBar extends Component {
   state = {
     auth: true,
-    anchorEl: null
+    anchorEl: null,
   };
 
   handleChange = (event) => {
@@ -45,26 +47,36 @@ class MenuAppBar extends Component {
   };
 
   render() {
+    // let history = useHistory();
     // const classes = useStyles();
     const { classes } = this.props;
-    const open = this.state.anchorEl;
-    
     return (
       <div>
         <AppBar position="static">
           <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              News
-            </Typography>
-            <Button color="inherit">Sign up</Button>
+            <Button color="inherit" onClick={() => history.push("/")}>
+              Home
+            </Button>
+            <Typography variant="h6" className={classes.title}></Typography>
+            <Button color="inherit" onClick={() => history.push("/log-in")}>
+              Log in
+            </Button>
+            <Button color="inherit" onClick={() => history.push("/sign-up")}>
+              Sign up
+            </Button>
           </Toolbar>
         </AppBar>
       </div>
     );
-  
+
     // return (
     //   <div className={classes.root}>
     //     <AppBar position="static">
@@ -113,4 +125,11 @@ class MenuAppBar extends Component {
   }
 }
 
-export default withStyles(useStyles)(MenuAppBar)
+const mapStateToProps = (state) => {
+  // console.log("redux state: ", state);
+  return {
+    products: state.products,
+  };
+};
+
+export default connect(mapStateToProps)(withStyles(useStyles)(MenuAppBar));

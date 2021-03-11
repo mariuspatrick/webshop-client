@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 // import api from '../api';
 import { withStyles } from "@material-ui/core/styles";
-import ProductsList from "pages/products/ProductsList";
-import Topbar from "pages/Topbar";
+import ProductsList from "components/products/ProductsList";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
@@ -24,7 +23,6 @@ class Home extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <Topbar />
         <Grid container spacing={3}>
           <Grid item xs>
             <Paper className={classes.paper}>xs</Paper>
