@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import "App.css";
 import { Form, Button } from "react-bootstrap";
 import { register } from "app/actions/users";
 import { Link } from "react-router-dom";
+import { userErrors } from "app/actions/users";
 import "App.css";
 
 class Register extends Component {
   state = {
     email: "",
-    nickname: "",
+    name: "",
     password: "",
     passwordConfirmation: "",
   };
@@ -19,18 +19,24 @@ class Register extends Component {
     this.setState({
       [event.target.name]: event.target.value,
     });
+    if (event.target.value === "")
+      this.props.dispatch(
+        userErrors({
+          ...this.props.errors,
+          [event.target.name]: [],
+        })
+      );
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const { email, nickname, password, passwordConfirmation } = this.state;
+    const { email, name, password, passwordConfirmation } = this.state;
 
-    this.props.dispatch(
-      register(nickname, email, password, passwordConfirmation)
-    );
+    this.props.dispatch(register(name, email, password, passwordConfirmation));
   };
   render() {
+    const { errors } = this.props;
     return (
       <div className="submit-form__container">
         <Form className="submit-form">
@@ -43,8 +49,8 @@ class Register extends Component {
               value={this.state.email}
               onChange={this.handleChange}
             />
-            {this.props.users &&
-              this.props.users.errors.email.map((error, index) => {
+            {errors.email &&
+              errors.email.map((error, index) => {
                 return (
                   <p className="info__errors" key={index}>
                     {error}
@@ -56,11 +62,19 @@ class Register extends Component {
             <Form.Label>Nickname</Form.Label>
             <Form.Control
               type="name"
-              name="nickname"
+              name="name"
               placeholder="Enter nickname"
-              value={this.state.nickname}
+              value={this.state.name}
               onChange={this.handleChange}
             />
+            {errors.name &&
+              errors.name.map((error, index) => {
+                return (
+                  <p className="info__errors" key={index}>
+                    {error}
+                  </p>
+                );
+              })}
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
@@ -71,8 +85,8 @@ class Register extends Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
-            {this.props.users &&
-              this.props.users.errors.password.map((error, index) => {
+            {errors.password &&
+              errors.password.map((error, index) => {
                 return (
                   <p className="info__errors" key={index}>
                     {error}
@@ -110,7 +124,8 @@ class Register extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.users,
+  users: state.users.token,
+  errors: state.users.errors,
   // userErrors: state.users.errors,
 });
 

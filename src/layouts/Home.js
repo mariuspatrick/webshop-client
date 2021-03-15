@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 // import api from '../api';
 import { withStyles } from "@material-ui/core/styles";
-import ProductsList from "components/products/ProductsList";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+
+import ProductsList from "components/products/ProductsList";
+import ShoppingCart from "components/shopping_cart/ShoppingCart";
 
 const useStyles = (theme) => ({
   root: {
@@ -18,14 +20,14 @@ const useStyles = (theme) => ({
 
 class Home extends Component {
   render() {
-    // this.state.data && console.log('res: ', this.data);
-    // const data = this.state.data;
     const { classes } = this.props;
     return (
       <div>
         <Grid container spacing={3}>
           <Grid item xs>
-            <Paper className={classes.paper}>xs</Paper>
+            <Paper className={classes.paper}>
+              <ShoppingCart />
+            </Paper>
           </Grid>
           <Grid item xs={6}>
             <Paper className={classes.paper}>
